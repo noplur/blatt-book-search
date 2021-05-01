@@ -65,9 +65,6 @@ module.exports = {
       { $pull: { savedBooks: { bookId: params.bookId } } },
       { new: true }
     );
-    if (!updatedUser) {
-      return res.status(404).json({ message: "Couldn't find user with this id!" });
-    }
     return res.json(updatedUser);
   },
 };
