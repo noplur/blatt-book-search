@@ -1,4 +1,8 @@
 import React, { useState } from 'react';
+
+import { useMutation } from '@apollo/react-hooks';
+import { ADD_USER } from '../utils/mutations';
+
 import { Form, Button, Alert } from 'react-bootstrap';
 
 import { createUser } from '../utils/API';
@@ -7,6 +11,9 @@ import Auth from '../utils/auth';
 const SignupForm = () => {
   // set initial form state
   const [userFormData, setUserFormData] = useState({ username: '', email: '', password: '' });
+
+  const [addUser] = useMutation(ADD_USER);
+
   // set state for form validation
   const [validated] = useState(false);
   // set state for alert
@@ -20,27 +27,40 @@ const SignupForm = () => {
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
+     // use try/catch instead of promises to handle errors
+  try {
+    const { data } = await addUser({
+      variables: { ...userFormData }
+    });
+  
+    Auth.login(data.addUser.token);
+  } catch (e) {
+    console.error(e);
+    setShowAlert(true);
+  }
+  
+
     // check if form has everything (as per react-bootstrap docs)
-    const form = event.currentTarget;
-    if (form.checkValidity() === false) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
+    // const form = event.currentTarget;
+    // if (form.checkValidity() === false) {
+    //   event.preventDefault();
+    //   event.stopPropagation();
+    // }
 
-    try {
-      const response = await createUser(userFormData);
+    // try {
+    //   const response = await createUser(userFormData);
 
-      if (!response.ok) {
-        throw new Error('something went wrong!');
-      }
+    //   if (!response.ok) {
+    //     throw new Error('something went wrong!');
+    //   }
 
-      const { token, user } = await response.json();
-      console.log(user);
-      Auth.login(token);
-    } catch (err) {
-      console.error(err);
-      setShowAlert(true);
-    }
+    //   const { token, user } = await response.json();
+    //   console.log(user);
+    //   Auth.login(token);
+    // } catch (err) {
+    //   console.error(err);
+    //   setShowAlert(true);
+    // }
 
     setUserFormData({
       username: '',
@@ -48,7 +68,7 @@ const SignupForm = () => {
       password: '',
     });
   };
-
+  
   return (
     <>
       {/* This is needed for the validation functionality above */}
@@ -106,5 +126,6 @@ const SignupForm = () => {
     </>
   );
 };
+
 
 export default SignupForm;
