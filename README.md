@@ -7,7 +7,7 @@
 
 ### The Rosenblatt Book Search can be viewed here: https://blatt-booksearch.herokuapp.com/
 
-### The GitHub repository for Rosenblatt Book Search can be viewed here: https://github.com/noplur/book-search
+### The GitHub repository for Rosenblatt Book Search can be viewed here: https://github.com/noplur/blatt-book-search
 
 ### Here is a screenshot of a sample from Rosenblatt Book Search:
 ### ![](./image/booksearch.jpg)
