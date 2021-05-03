@@ -15,3 +15,19 @@ h6 {
   font-weight: 300;
   font-style: italic;
 }
+
+.links {
+  text-decoration: none;
+  color: darkblue;
+  font-weight: 300;
+}
+
+.links:hover {
+  text-decoration: none;
+  color: darkblue;
+  font-weight: 300;
+}
+
+a {
+  text-decoration: none;
+}
